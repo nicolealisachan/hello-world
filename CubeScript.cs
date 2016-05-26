@@ -15,7 +15,7 @@ public class CubeScript : MonoBehaviour {
 
 	}
 
-	public void setsize(float size)
+	public void SetSize(float size)
 	{
 		this.transform.localScale = new Vector3 (size, size, size); 	
 	}
