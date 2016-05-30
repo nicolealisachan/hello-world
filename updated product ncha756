@@ -1,0 +1,68 @@
+using UnityEngine;
+using Pathfinding.Serialization.JsonFx; 
+
+public class Sketch : MonoBehaviour {
+	public GameObject myPrefab;
+	public string _WebsiteURL = "http://ncha756.azurewebsites.net/AssignmentTwoDone/product?zumo-api-version=2.0.0
+	void Start () {
+
+		string jsonResponse = Request.GET(_WebsiteURL);
+
+
+		if (string.IsNullOrEmpty(jsonResponse))
+		{
+			return;
+		}
+
+		Trello[] trellos = JsonReader.Deserialize<Trello[]>(jsonResponse);
+
+		//---------------------
+
+		/*ncha756*/
+
+		int i = 0;
+
+		/*ncha756*/
+
+		//----------------------
+
+
+		foreach (Trello trello in trellos)
+		{
+
+			Debug.Log(trello.Title);
+
+			//---------------------
+
+			/*ncha756*/
+
+			int totalCubes = 20;
+			float totalDistance = 3.2f;
+
+			//Sin Distro
+
+			float perc = i / (float)totalCubes;
+			float sin = Mathf.Sin (perc * Mathf.PI/2);
+
+			float x = 1.8f + sin * totalDistance;
+			float y = 5.0f;
+			float z = 0.0f;
+
+			var newCube = (GameObject)Instantiate (myPrefab, new Vector3 (x, y, z), Quaternion.identity);
+			newCube.GetComponent<CubeScript>().SetSize(1.0f*(1.0f - perc));	
+			newCube.GetComponent<CubeScript> ().rotateSpeed = .45f + perc;
+			newCube.GetComponentInChildren<TextMesh> ().text = trello.AddedAt;
+
+			i++;
+
+			/*ncha756*/
+
+			//----------------------
+		}
+	}
+
+	// Update is called once per frame
+	void Update () {
+
+	}
+}
